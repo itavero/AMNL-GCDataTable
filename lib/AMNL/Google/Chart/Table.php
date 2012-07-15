@@ -33,6 +33,12 @@ class Table
      */
     protected $rows;
 
+    /**
+     * The arguments for this constructor are Column-instances and
+     * define the structure of your table.
+     *
+     * @throws \InvalidArgumentException When you haven't supplied a single column or when one of the arguments isn't a Column instance.
+     */
     public function __construct()
     {
         $args = func_get_args();
@@ -53,11 +59,20 @@ class Table
         $this->rows = array();
     }
 
+    /**
+     * @return array An array of Column instances, defining the structure of this table.
+     */
     public function getColumns()
     {
         return $this->columns;
     }
 
+    /**
+     * Add a row to the bottom of the table
+     *
+     * @param \AMNL\Google\Chart\Row $row
+     * @throws \InvalidArgumentException When the number of cells does not match the number of columns, or when one of the cells does not comply with the type of the corresponding column
+     */
     public function addRow(\AMNL\Google\Chart\Row $row)
     {
         $cells = $row->getCells();
@@ -75,7 +90,16 @@ class Table
         $this->rows[] = $row;
     }
 
-    public function toJson()
+    /**
+     * Generate an object representation of this DataTable.
+     * This method is also used by Table::toJson.
+     * You can use this method to combine multiple DataTables into
+     * a single JSON output.
+     *
+     * @see Task::toJson()
+     * @return object Object representation of this DataTable
+     */
+    public function toObject()
     {
         $output = array('cols' => array(), 'rows' => array());
 
@@ -104,7 +128,20 @@ class Table
             $output['rows'][] = (object) $row;
         }
 
-        return json_encode((object) $output);
+        return (object) $output;
+    }
+
+    /**
+     * This method generates a JSON representation of this DataTable.
+     * It uses Task::toObject and json_encode.
+     *
+     * @see Task::toObject()
+     * @see json_encode()
+     * @return string JSON representation of this DataTable
+     */
+    public function toJson()
+    {
+        return json_encode($this->toObject());
     }
 
 }
