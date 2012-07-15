@@ -35,7 +35,8 @@ class Table
 
     /**
      * The arguments for this constructor are Column-instances and
-     * define the structure of your table.
+     * define the structure of your table. It's also possible to
+     * supply a single array that contains the Column instances.
      *
      * @throws \InvalidArgumentException When you haven't supplied a single column or when one of the arguments isn't a Column instance.
      */
@@ -46,8 +47,14 @@ class Table
             throw new \InvalidArgumentException('A table should have at least one column.');
         }
 
+        if (count($args) == 1 && is_array($args[0]) && !empty($args[0])) {
+            $input = array_values($args[0]);
+        } else {
+            $input = $args;
+        }
+
         $columns = array();
-        foreach ($args as $c) {
+        foreach ($input as $c) {
             if (!($c instanceof Column)) {
                 throw new \InvalidArgumentException('All arguments passed to the constructor of Table must be an instance of Column.');
             }
