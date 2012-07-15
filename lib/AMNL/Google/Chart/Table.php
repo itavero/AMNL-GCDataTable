@@ -70,12 +70,19 @@ class Table
     /**
      * Add a row to the bottom of the table
      *
-     * @param \AMNL\Google\Chart\Row $row
-     * @throws \InvalidArgumentException When the number of cells does not match the number of columns, or when one of the cells does not comply with the type of the corresponding column
+     * @param \AMNL\Google\Chart\Row|array $row Instance of Row or an array
+     * @throws \InvalidArgumentException When the argument has the wrong type, when the number of cells does not match the number of columns, or when one of the cells does not comply with the type of the corresponding column
      */
-    public function addRow(\AMNL\Google\Chart\Row $row)
+    public function addRow($row)
     {
-        $cells = $row->getCells();
+        if (is_array($row)) {
+            $cells = array_values($row);
+            $row = new Row($cells);
+        } elseif ($row instanceof Row) {
+            $cells = $row->getCells();
+        } else {
+            throw new \InvalidArgumentException('Argument supplied to Table::addRow should be an array or an instance of Row.');
+        }
 
         if (count($cells) != count($this->columns)) {
             throw new \InvalidArgumentException('Number of Cells in Row does not match the number of Columns in Table.');
