@@ -39,7 +39,7 @@ class DateTime implements Type
 
     public function convertToStringVersion($object)
     {
-        return $object->format(\DateTime::RFC822);
+        return null;
     }
 
     public function getName()
