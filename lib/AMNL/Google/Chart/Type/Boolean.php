@@ -32,7 +32,7 @@ class Boolean implements Type
 
     public function convertToStringVersion($object)
     {
-        return $this->convertToCellValue($this);
+        return $this->convertToCellValue($object);
     }
 
     public function getName()
