@@ -19,7 +19,8 @@
     "autoload": {
         "psr-0": {
             "AMNL\\Google\\Chart": "lib/"
-        }
+        },
+        "classmap": [ "stubs" ]
     },
     "extra": {
         "branch-alias": {
