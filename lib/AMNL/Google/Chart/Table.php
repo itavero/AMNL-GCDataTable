@@ -110,7 +110,7 @@ class Table
      * You can use this method to combine multiple DataTables into
      * a single JSON output.
      *
-     * @see Task::toJson()
+     * @see Table::toJson()
      * @return object Object representation of this DataTable
      */
     public function toObject()
@@ -147,9 +147,9 @@ class Table
 
     /**
      * This method generates a JSON representation of this DataTable.
-     * It uses Task::toObject and json_encode.
+     * It uses Table::toObject and json_encode.
      *
-     * @see Task::toObject()
+     * @see Table::toObject()
      * @see json_encode()
      * @return string JSON representation of this DataTable
      */
