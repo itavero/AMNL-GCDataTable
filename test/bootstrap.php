@@ -1,24 +1,10 @@
 <?php
 
-/**
- * This file is part of AMNL-GCDataTable.
- * 
- * Copyright (c) 2013, Arno Moonen <info@arnom.nl>
- * 
- * For the full copyright and license information, please view
- * the LICENSE file that was distributed with this source code.
- * 
- * @author Arno Moonen <info@arnom.nl>
- * @copyright Copyright (c) 2013, Arno Moonen <info@arnom.nl>
- */
-#namespace AMNL-GCDataTable;
+// Output all errors
+error_reporting(E_ALL | E_STRICT);
 
-/**
- * bootstrap class
- *
- * @author Arno Moonen <info@arnom.nl>
- */
-class bootstrap
-{
-    // TODO Implement bootstrap class
-}
+// Base path
+define('BASE_PATH', dirname(__DIR__));
+
+// Autoloader
+require_once BASE_PATH . '/vendor/autoload.php';
