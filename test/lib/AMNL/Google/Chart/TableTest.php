@@ -42,6 +42,18 @@ class TableTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers AMNL\Google\Chart\Table::__construct
+     */
+    public function testVerifyColumnIdentifier()
+    {
+        $this->setExpectedException('RuntimeException');
+        $obj = new Table(
+                new Column(new T\String(), 'First', 'same-id'), new Column(new T\String(), 'Second', 'same-id')
+        );
+        $this->fail('Exception should have been thrown');
+    }
+
+    /**
      * @covers AMNL\Google\Chart\Table::getColumns
      */
     public function testGetColumns()
