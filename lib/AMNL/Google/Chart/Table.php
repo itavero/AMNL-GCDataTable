@@ -20,7 +20,7 @@ namespace AMNL\Google\Chart;
  *
  * @author Arno Moonen <info@arnom.nl>
  */
-class Table
+class Table implements \JsonSerializable
 {
 
     /**
@@ -156,6 +156,15 @@ class Table
     public function toJson()
     {
         return json_encode($this->toObject());
+    }
+    
+    /**
+     * @see Table::toObject()
+     * @see JsonSerializable::jsonSerialize()
+     * @see json_encode()
+     */
+    public function jsonSerialize() {
+    	return $this->toObject();
     }
 
 }

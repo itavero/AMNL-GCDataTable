@@ -30,20 +30,12 @@ class TableTest extends \PHPUnit_Framework_TestCase
      */
     protected $object;
 
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
     protected function setUp()
     {
         $this->object = new Table(new Column(new T\String()), new Column(new T\String()));
         $this->object->addRow(array('a', 'b'));
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
     protected function tearDown()
     {
         $this->object = null;
@@ -51,7 +43,6 @@ class TableTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers AMNL\Google\Chart\Table::getColumns
-     * @todo   Implement testGetColumns().
      */
     public function testGetColumns()
     {
@@ -99,7 +90,6 @@ class TableTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers AMNL\Google\Chart\Table::toObject
-     * @todo   Implement testToObject().
      */
     public function testToObject()
     {
@@ -131,7 +121,6 @@ class TableTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers AMNL\Google\Chart\Table::toJson
-     * @todo   Implement testToJson().
      */
     public function testToJson()
     {
@@ -141,6 +130,29 @@ class TableTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue(is_object($actualObj));
         $this->assertEquals($expectedObj, $actualObj);
+    }
+
+    /**
+     * @covers AMNL\Google\Chart\Table::jsonSerialize
+     * @see JsonSerializable::jsonSerialize
+     */
+    public function testJsonSerialize()
+    {
+
+        // Ensure that the interface exists
+        $this->assertTrue(interface_exists('\JsonSerializable'), 'JsonSerializable interface should exist.');
+
+        $expectedObj = $this->object->toObject();
+        $actualObj = $this->object->jsonSerialize();
+        $this->assertEquals($expectedObj, $actualObj);
+
+        // PHP 5.4 or higher uses the JsonSerializable interface
+        if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
+            echo '[Test JsonSerialize]';
+            $expectedJson = $this->object->toJson();
+            $actualJson = json_encode($this->object);
+            $this->assertEquals($expectedJson, $actualJson);
+        }
     }
 
 }
