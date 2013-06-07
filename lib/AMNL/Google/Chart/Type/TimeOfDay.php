@@ -42,7 +42,7 @@ class TimeOfDay implements Type
 
     public function getName()
     {
-        return 'date';
+        return 'timeofday';
     }
 
     public function validate($object)

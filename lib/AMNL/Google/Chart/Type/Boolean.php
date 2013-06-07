@@ -27,7 +27,19 @@ class Boolean implements Type
 
     public function convertToCellValue($object)
     {
-        return ($object) ? 'true' : 'false';
+        if (is_string($object)) {
+            $cmp = strtolower(trim($object));
+            if ($cmp === 'true') {
+                return 'true';
+            } elseif ($cmp === 'false') {
+                return 'false';
+            }
+        }
+        if (!function_exists('boolval')) {
+            return ((bool) $object) ? 'true' : 'false';
+        } else {
+            return (boolval($object)) ? 'true' : 'false';
+        }
     }
 
     public function convertToStringVersion($object)
@@ -42,7 +54,7 @@ class Boolean implements Type
 
     public function validate($object)
     {
-        return is_bool($object) || filter_var($object, FILTER_VALIDATE_BOOLEAN);
+        return is_bool($object) || filter_var($object, FILTER_VALIDATE_BOOLEAN) || $object === 0 || $object === 1 || $object === 'true' || $object === 'false';
     }
 
     public function __toString()
