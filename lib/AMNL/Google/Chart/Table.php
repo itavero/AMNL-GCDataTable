@@ -39,6 +39,7 @@ class Table implements \JsonSerializable
      * supply a single array that contains the Column instances.
      *
      * @throws \InvalidArgumentException When you haven't supplied a single column or when one of the arguments isn't a Column instance.
+     * @throws \RuntimeException When the same column identifier is used for multiple columns.
      */
     public function __construct()
     {
@@ -53,10 +54,21 @@ class Table implements \JsonSerializable
             $input = $args;
         }
 
+        // Add columns
+        $columnIds = array();
         $columns = array();
         foreach ($input as $c) {
             if (!($c instanceof Column)) {
                 throw new \InvalidArgumentException('All arguments passed to the constructor of Table must be an instance of Column.');
+            }
+
+            // Verify uniqueness of column identifier
+            $cid = $c->getId();
+            if ($cid != null) {
+                if (in_array($cid, $columnIds)) {
+                    throw new \RuntimeException('Column identifier "' . $cid . '" is NOT unique.');
+                }
+                $columnIds[] = $cid;
             }
 
             $columns[] = $c;
@@ -157,14 +169,15 @@ class Table implements \JsonSerializable
     {
         return json_encode($this->toObject());
     }
-    
+
     /**
      * @see Table::toObject()
      * @see JsonSerializable::jsonSerialize()
      * @see json_encode()
      */
-    public function jsonSerialize() {
-    	return $this->toObject();
+    public function jsonSerialize()
+    {
+        return $this->toObject();
     }
 
 }
