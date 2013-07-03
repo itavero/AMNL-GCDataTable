@@ -1,5 +1,7 @@
 # GC DataTable
 [![Build Status](https://travis-ci.org/itavero/AMNL-GCDataTable.png)](https://travis-ci.org/itavero/AMNL-GCDataTable)
+[![Latest Stable Version](https://poser.pugx.org/amnl/gc-datatable/v/stable.png)](https://packagist.org/packages/amnl/gc-datatable)
+[![Total Downloads](https://poser.pugx.org/amnl/gc-datatable/downloads.png)](https://packagist.org/packages/amnl/gc-datatable)
 
 This library is meant to simplify the dynamic generation of a JSON-representation of a DataTable when using PHP. DataTables are used by the Google Visualization API / Chart Tools, see [this reference on developers.google.com](https://developers.google.com/chart/interactive/docs/reference#dataparam) for more info.
 
